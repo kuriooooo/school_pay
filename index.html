@@ -22,9 +22,20 @@
         }
         .buttons {
             margin-bottom: 20px;
+            display: flex;
+            gap: 20px;
         }
         .buttons button {
-            margin: 0 10px;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            border: none;
+            border-radius: 5px;
+            background-color: #007bff;
+            color: white;
+        }
+        .buttons button:hover {
+            background-color: #0056b3;
         }
     </style>
 </head>
@@ -33,10 +44,9 @@
         <button onclick="showForm('register')">新規登録</button>
         <button onclick="showForm('login')">ログイン</button>
     </div>
-
     <div id="register" class="form-container">
         <h2>新規登録</h2>
-        <form>
+        <form action="/register" method="POST">
             <label for="register-username">ユーザー名:</label>
             <input type="text" id="register-username" name="username" required><br><br>
             <label for="register-password">パスワード:</label>
@@ -46,7 +56,7 @@
     </div>
     <div id="login" class="form-container">
         <h2>ログイン</h2>
-        <form>
+        <form action="/login" method="POST">
             <label for="login-username">ユーザー名:</label>
             <input type="text" id="login-username" name="username" required><br><br>
             <label for="login-password">パスワード:</label>
