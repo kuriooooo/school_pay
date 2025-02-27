@@ -37,6 +37,11 @@
         .buttons button:hover {
             background-color: #0056b3;
         }
+        .message {
+            margin-top: 20px;
+            font-size: 18px;
+            color: green;
+        }
     </style>
 </head>
 <body>
@@ -46,7 +51,7 @@
     </div>
     <div id="register" class="form-container">
         <h2>新規登録</h2>
-        <form action="/register" method="POST">
+        <form id="register-form" action="/register" method="POST">
             <label for="register-username">ユーザー名:</label>
             <input type="text" id="register-username" name="username" required><br><br>
             <label for="register-password">パスワード:</label>
@@ -56,7 +61,7 @@
     </div>
     <div id="login" class="form-container">
         <h2>ログイン</h2>
-        <form action="/login" method="POST">
+        <form id="login-form" action="/login" method="POST">
             <label for="login-username">ユーザー名:</label>
             <input type="text" id="login-username" name="username" required><br><br>
             <label for="login-password">パスワード:</label>
@@ -64,6 +69,7 @@
             <button type="submit">ログイン</button>
         </form>
     </div>
+    <div class="message" id="message"></div>
     <script>
         function showForm(formId) {
             document.querySelectorAll('.form-container').forEach(function(form) {
@@ -71,6 +77,31 @@
             });
             document.getElementById(formId).classList.add('active');
         }
+
+        document.getElementById('register-form').onsubmit = async function(event) {
+            event.preventDefault();
+            const formData = new FormData(event.target);
+            const response = await fetch('/register', {
+                method: 'POST',
+                body: formData
+            });
+            const message = await response.text();
+            document.getElementById('message').textContent = message;
+            if (message === '新規登録完了！') {
+                showForm('login');
+            }
+        };
+
+        document.getElementById('login-form').onsubmit = async function(event) {
+            event.preventDefault();
+            const formData = new FormData(event.target);
+            const response = await fetch('/login', {
+                method: 'POST',
+                body: formData
+            });
+            const message = await response.text();
+            document.getElementById('message').textContent = message;
+        };
     </script>
 </body>
 </html>
